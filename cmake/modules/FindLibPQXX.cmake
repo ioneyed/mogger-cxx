@@ -12,25 +12,25 @@
 #             or the lib/LIBPQXX directory.  This is the
 #             only cache entry.
 
-#  LIBPQXX_FOUND        - True when the LIBPQXX include directory is found.
-#  LIBPQXX_INCLUDE_DIRS - the path to where the LIBPQXX include files are.
+#  LIBPQXX_FOUND        - True when the LIBPQXX mogger directory is found.
+#  LIBPQXX_INCLUDE_DIRS - the path to where the LIBPQXX mogger files are.
 #  LIBPQXX_LIBRARY_DIRS - The path to where the LIBPQXX library files are.
 
 # ----------------------------------------------------------------------------
 # If you have installed LIBPQXX in a non-standard location.
 # Then you have three options.
 # In the following comments, it is assumed that <Your Path>
-# points to the root directory of the include directory of LIBPQXX. e.g
+# points to the root directory of the mogger directory of LIBPQXX. e.g
 # If you have put LIBPQXX in C:\development\libpqxx then <Your Path> is
 # "C:/development/libpqxx" and in this directory there will be two
-# directories called "include" and "lib".
+# directories called "mogger" and "lib".
 # 1) After CMake runs, set LIBPQXX_INCLUDE_DIR to <Your Path>/LIBPQXX<-version>
 # 2) Use CMAKE_INCLUDE_PATH to set a path to <Your Path>/LIBPQXX<-version>. This will allow FIND_PATH()
 #    to locate LIBPQXX_INCLUDE_DIR by utilizing the PATH_SUFFIXES option. e.g.
-#    SET(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "<Your Path>/include")
+#    SET(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "<Your Path>/mogger")
 # 3) Set an environment variable called ${LIBPQXX_ROOT} that points to the root of where you have
 #    installed LIBPQXX, e.g. <Your Path>. It is assumed that there is at least a subdirectory called
-#    Foundation/include/LIBPQXX in this path.
+#    Foundation/mogger/LIBPQXX in this path.
 #
 # Usage:
 # In your CMakeLists.txt file do something like this:
@@ -44,7 +44,7 @@
 # In Windows, we make the assumption that, if the LIBPQXX files are installed, the default directory
 # will be C:\LIBPQXX or C:\Program Files\LIBPQXX.
 
-set(LIBPQXX_INCLUDE_PATH_DESCRIPTION "top-level directory containing the LIBPQXX include directories. E.g /usr/local/include/libpqxx-2.6.8 or C:/libpqxx-2.6.8")
+set(LIBPQXX_INCLUDE_PATH_DESCRIPTION "top-level directory containing the LIBPQXX mogger directories. E.g /usr/local/mogger/libpqxx-2.6.8 or C:/libpqxx-2.6.8")
 set(LIBPQXX_INCLUDE_DIR_MESSAGE "Set the LIBPQXX_INCLUDE_DIR cmake cache entry to the ${LIBPQXX_INCLUDE_PATH_DESCRIPTION}")
 set(LIBPQXX_LIBRARY_PATH_DESCRIPTION "top-level directory containing the LIBPQXX libraries.")
 set(LIBPQXX_LIBRARY_DIR_MESSAGE "Set the LIBPQXX_LIBRARY_DIR cmake cache entry to the ${LIBPQXX_LIBRARY_PATH_DESCRIPTION}")
@@ -82,7 +82,7 @@ set(SUFFIX_FOR_LIBRARY_PATH
 #
 # Look for an installation.
 #
-find_path(LIBPQXX_INCLUDE_DIR NAMES /include/pqxx/connection.hxx PATH_SUFFIXES ${SUFFIX_FOR_INCLUDE_PATH} PATHS
+find_path(LIBPQXX_INCLUDE_DIR NAMES /mogger/pqxx/connection.hxx PATH_SUFFIXES ${SUFFIX_FOR_INCLUDE_PATH} PATHS
 
   # Look in other places.
   ${LIBPQXX_DIR_SEARCH}
@@ -91,12 +91,12 @@ find_path(LIBPQXX_INCLUDE_DIR NAMES /include/pqxx/connection.hxx PATH_SUFFIXES $
   DOC "The ${LIBPQXX_INCLUDE_DIR_MESSAGE}"
 )
 
-# Now try to get the include and library path.
+# Now try to get the mogger and library path.
 if(LIBPQXX_INCLUDE_DIR)
 
   if(EXISTS "${LIBPQXX_INCLUDE_DIR}")
     set(LIBPQXX_INCLUDE_DIRS
-      ${LIBPQXX_INCLUDE_DIR}/include
+      ${LIBPQXX_INCLUDE_DIR}/mogger
     )
   endif(EXISTS "${LIBPQXX_INCLUDE_DIR}")
 

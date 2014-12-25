@@ -4,25 +4,31 @@ project(main-cxx)
 set ( CMAKE_VERBOSE_MAKEFILE true )
 set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules" )
 
-add_subdirectory( ${CMAKE_SOURCE_DIR}/dependency/restbed)
-add_subdirectory( ${CMAKE_SOURCE_DIR}/dependency/restbed/dependency/framework)
-
+add_subdirectory("${CMAKE_SOURCE_DIR}/dependency/jsoncpp")
 #dependencies
 find_package( LibPQXX REQUIRED )
 find_package( LibPQ REQUIRED )
-find_package( restbed REQUIRED )
-find_package( framework REQUIRED )
 
+find_package( JsonCPP REQUIRED )
+
+find_package( framework REQUIRED )
+find_package( restbed REQUIRED )
 
 include_directories(${LIBPQXX_INCLUDE_DIRS})
 include_directories(${LIBPQ_INCLUDE_DIRS})
+
+include_directories(${JSONCPP_INCLUDE_DIRS})
+
 include_directories(${framework_INCLUDE})
 include_directories(${restbed_INCLUDE})
 
 link_directories(${LIBPQXX_LIBRARY_DIRS})
 link_directories(${LIBPQ_LIBRARY_DIRS})
-link_directories(${restbed_INCLUDE})
+
+link_directories(${JSONCPP_LIBRARY_DIRS})
+
 link_directories(${framework_INCLUDE})
+link_directories(${restbed_INCLUDE})
 
 #
 # Configuration
@@ -59,7 +65,7 @@ set( EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/distribution/bin/"  )
 #
 # Build
 #
-#include( "${CMAKE_SOURCE_DIR}/cmake/build_manifest.cmake" )
+include( "${CMAKE_SOURCE_DIR}/cmake/build_manifest.cmake" )
 
 include_directories( ${INCLUDE_DIR} )
 
@@ -71,17 +77,20 @@ endif ( )
 # Install
 #
 file( MAKE_DIRECTORY "${CMAKE_INSTALL_PREFIX}/library" )
-file( MAKE_DIRECTORY "${CMAKE_INSTALL_PREFIX}/include/main_cxx" )
+file( MAKE_DIRECTORY "${CMAKE_INSTALL_PREFIX}/ioneyed/mogger" )
+
+#add_library( mogger SHARED ${MANIFEST} )
 
 #include( "${CMAKE_SOURCE_DIR}/cmake/build_artifacts.cmake" )
+#install( FILES ${FRAMEWORK_ARTIFACTS} DESTINATION "mogger/ioneyed/mogger" )
 
-#install( FILES ${INCLUDE_DIR}/restbed DESTINATION "include/" )
-#install( FILES ${INCLUDE_DIR}/framework DESTINATION "include/" )
+#install( FILES ${INCLUDE_DIR}/restbed DESTINATION "mogger/" )
+#install( FILES ${INCLUDE_DIR}/framework DESTINATION "mogger/" )
 
-#install( FILES ${FRAMEWORK_ARTIFACTS} DESTINATION "include/mogger_cxx/" )
+#install( FILES ${FRAMEWORK_ARTIFACTS} DESTINATION "mogger/mogger_cxx/" )
 
 
 set(SOURCE_FILES ${SOURCE_DIR}/main.cpp)
 add_executable(main-bin ${SOURCE_FILES})
 #${RESTBED_LIBRARY} ${FRAMEWORK_LIBRARY}
-target_link_libraries(main-bin ${LIBPQXX_LIBRARY} ${LIBPQ_LIBRARY} ${restbed_LIBRARY} ${framework_LIBRARY} )
+target_link_libraries(main-bin ${LIBPQXX_LIBRARY} ${LIBPQ_LIBRARY} ${restbed_LIBRARY} jsoncpp )

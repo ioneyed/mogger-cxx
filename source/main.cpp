@@ -5,11 +5,11 @@
 #include <iostream>
 #include <pqxx/pqxx>
 #include <json/json.h>
+//#include "mogger"
 
 using namespace std;
 using namespace restbed;
 using namespace pqxx;
-
 
 pqxx::connection C("dbname=promotion_dev user=promotion_dev password=promotion_dev hostaddr=127.0.0.1 port=5432");
 
@@ -105,22 +105,16 @@ Response get_method_handler( const Request& request )
         result R( N.exec( sql ));
 
         string body;
+        Json::Value root;
+
         body+="{ \"items\":[";
-        /* List down all the records */
         for (result::const_iterator c = R.begin(); c != R.end(); ++c) {
-            //Person p = new Person(c[0].as<int>(), c[1].as<string>(), c[2].as<string>());
-            std::string output;
-            //CJsonSerializer::Serialize(&p, output);
-            clog << output << endl;
-            clog << c[0].as<string>() << std::endl;
-            clog << c[1].as<string>() << std::endl;
-            clog << c[2].as<string>() << std::endl;
-            body+="{\"id\":" + c[0].as<string>();
-            body+="\"name\":" + c[1].as<string>();
-            body+="\"email\":" + c[2].as<string>();
-            body+="},";
+            /*mogger::User user = mogger::User(c[0].as<string>(),c[1].as<string>(),c[2].as<string>());
+            clog << user.get_name() << "," << user.get_email() << endl;*/
         }
         body+="]}";
+
+
         C.disconnect ();
 
         Response response;
@@ -131,7 +125,7 @@ Response get_method_handler( const Request& request )
     }catch (const std::exception &e){
         clog << e.what() << std::endl;
         Response resp;
-        resp.set_body("Erro");
+        resp.set_body("Err");
         resp.set_status_code(StatusCode::OK);
         return resp;
     }
@@ -139,8 +133,6 @@ Response get_method_handler( const Request& request )
 
 int main( int argc, char *argv[])
 {
-
-    string tableName("tabletwo");
 
     if (C.is_open()) {
         cout << "We are connected to" << C.dbname() << endl;

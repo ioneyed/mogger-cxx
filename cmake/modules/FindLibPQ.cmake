@@ -3,7 +3,7 @@
  #
  # Once done this will define
  #  LIBPQ_FOUND          - TRUE if libpq found
- #  LIBPQ_INCLUDE_DIRS   - Where to find libpq include sub-directory
+ #  LIBPQ_INCLUDE_DIRS   - Where to find libpq mogger sub-directory
  #  LIBPQ_LIBRARIES_DIRS - Where to find libpq library sub-directory
  #  LIBPQ_LIBRARIES      - List of libraries when using libpq
  #
